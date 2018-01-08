@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module fritzingVersion="0.9.3b.04.19.5c895d327c44a3114e5fcc9d8260daf0cbb52806" icon="Search.png" search="image">
+    <title>Search</title>
+    <instances>
+        <instance moduleIdRef="newSilkscreen0LogoImageModuleID" modelIndex="85412425" path=":/resources/parts/core/silkscreen0logoimage.fzp">
+            <views>
+                <iconView layer="">
+                    <geometry z="0" x="-1" y="-1"/>
+                </iconView>
+            </views>
+        </instance>
+        <instance moduleIdRef="bf73a00d2ecd04be25675ebfb2d130c0" modelIndex="85412426" path="/home/pcboy/Downloads/fritzing-0.9.3b.linux.AMD64/fritzing-parts/core/Humidity_Sensor_SHT15.fzp">
+            <views/>
+        </instance>
+        <instance moduleIdRef="newBreadboardLogoImageModuleID" modelIndex="85412427" path=":/resources/parts/core/breadboardlogoimage.fzp">
+            <views/>
+        </instance>
+        <instance moduleIdRef="newCopper0LogoImageModuleID" modelIndex="85412429" path=":/resources/parts/core/newcopper0logoimage.fzp">
+            <views/>
+        </instance>
+        <instance moduleIdRef="newSchematicLogoImageModuleID" modelIndex="85412431" path=":/resources/parts/core/newschematiclogoimage.fzp">
+            <views/>
+        </instance>
+        <instance moduleIdRef="newSchematicLogoImageModuleID" modelIndex="85412432" path=":/resources/parts/core/schematiclogoimage.fzp">
+            <views/>
+        </instance>
+        <instance moduleIdRef="ITG-3200-v11" modelIndex="85412434" path="/home/pcboy/Downloads/fritzing-0.9.3b.linux.AMD64/fritzing-parts/core/ITG-3200-v11.fzp">
+            <views/>
+        </instance>
+        <instance moduleIdRef="newLogoImageModuleID" modelIndex="85412435" path=":/resources/parts/core/logoimage.fzp">
+            <views/>
+        </instance>
+        <instance moduleIdRef="OneLayerBoardLogoImageModuleID" modelIndex="85412437" path=":/resources/parts/core/boardlogoimage_one_layer.fzp">
+            <views/>
+        </instance>
+        <instance moduleIdRef="SparkFun-Sensors-TCM8240MD-" modelIndex="85412439" path="/home/pcboy/Downloads/fritzing-0.9.3b.linux.AMD64/fritzing-parts/core/sparkfun-sensors-tcm8240md-.fzp" flippedSMD="true">
+            <views/>
+        </instance>
+        <instance moduleIdRef="newLogoImageModuleID" modelIndex="85412440" path=":/resources/parts/core/newlogoimage.fzp">
+            <views/>
+        </instance>
+        <instance moduleIdRef="newCopper1LogoImageModuleID" modelIndex="85412443" path=":/resources/parts/core/copper1logoimage.fzp">
+            <views>
+                <iconView layer="">
+                    <geometry z="0" x="-1" y="-1"/>
+                </iconView>
+            </views>
+        </instance>
+        <instance moduleIdRef="Memoire-1.0" modelIndex="85412444" path="/home/pcboy/Downloads/fritzing-0.9.3b.linux.AMD64/fritzing-parts/core/Memoire-1.0.fzp">
+            <views/>
+        </instance>
+        <instance moduleIdRef="MP3 Shield-v13" modelIndex="85412445" path="/home/pcboy/Downloads/fritzing-0.9.3b.linux.AMD64/fritzing-parts/core/MP3 Shield-v13.fzp">
+            <views/>
+        </instance>
+        <instance moduleIdRef="Power Screwshield 1.0a" modelIndex="85412446" path="/home/pcboy/Downloads/fritzing-0.9.3b.linux.AMD64/fritzing-parts/core/Power Screwshield 1.0a.fzp">
+            <views/>
+        </instance>
+        <instance moduleIdRef="newCopper1LogoImageModuleID" modelIndex="85412447" path=":/resources/parts/core/newcopper1logoimage.fzp">
+            <views/>
+        </instance>
+        <instance moduleIdRef="BoardLogoImageModuleID" modelIndex="85412448" path=":/resources/parts/core/boardlogoimage.fzp">
+            <views/>
+        </instance>
+        <instance moduleIdRef="ThermalPrinter" modelIndex="85412450" path="/home/pcboy/Downloads/fritzing-0.9.3b.linux.AMD64/fritzing-parts/core/thermalprinter.fzp">
+            <views/>
+        </instance>
+        <instance moduleIdRef="IOIO-v15" modelIndex="85412451" path="/home/pcboy/Downloads/fritzing-0.9.3b.linux.AMD64/fritzing-parts/core/IOIO-v15.fzp">
+            <views/>
+        </instance>
+        <instance moduleIdRef="Rotoshield-1.0a" modelIndex="85412452" path="/home/pcboy/Downloads/fritzing-0.9.3b.linux.AMD64/fritzing-parts/core/Rotoshield-1.0a.fzp">
+            <views/>
+        </instance>
+        <instance moduleIdRef="newBreadboardLogoImageModuleID" modelIndex="85412453" path=":/resources/parts/core/newbreadboardlogoimage.fzp">
+            <views/>
+        </instance>
+        <instance moduleIdRef="newSilkscreen0LogoImageModuleID" modelIndex="85412454" path=":/resources/parts/core/newsilkscreen0logoimage.fzp">
+            <views/>
+        </instance>
+        <instance moduleIdRef="newCopper0LogoImageModuleID" modelIndex="85412455" path=":/resources/parts/core/copper0logoimage.fzp">
+            <views/>
+        </instance>
+        <instance moduleIdRef="SparkFun-Sensors-TRANSCHIPTC5747-" modelIndex="85412457" path="/home/pcboy/Downloads/fritzing-0.9.3b.linux.AMD64/fritzing-parts/core/sparkfun-sensors-transchiptc5747-.fzp" flippedSMD="true">
+            <views/>
+        </instance>
+    </instances>
+</module>

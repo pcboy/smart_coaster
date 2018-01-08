@@ -1,0 +1,9 @@
+
+system("./smart_coaster.rb")
+watch( 'smart_coaster.rb' )  {|md|
+   system("./smart_coaster.rb")
+}
+
+watch( 'lib/*/(.*).rb' )  {|md|
+   system("./smart_coaster.rb")
+}

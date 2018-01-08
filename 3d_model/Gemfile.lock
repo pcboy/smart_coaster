@@ -1,0 +1,21 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    crystalscad (0.6.5)
+      observr (>= 1.0.5)
+      require_all (>= 1.3)
+      rubyscad (>= 1.0)
+      wijet-thor (>= 0.14.10)
+    observr (1.0.5)
+    require_all (1.5.0)
+    rubyscad (1.0.7)
+    wijet-thor (0.14.10)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  crystalscad
+
+BUNDLED WITH
+   1.14.6

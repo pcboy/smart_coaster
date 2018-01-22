@@ -67,7 +67,7 @@ BLYNK_WRITE(V4) {
 }
 
 BLYNK_WRITE(V5) {
-  ESP.deepSleep(31536e9); // 1 year
+  ESP.deepSleep(INT_MAX);
 }
 
 // To manually set the beerCounter
@@ -199,7 +199,7 @@ void myLoop() {
   int avg = average(&fsrValues);
   Serial.print("AVERAGE: ");
   Serial.println(avg);
-  Blynk.virtualWrite(V0, avg);
+  Blynk.virtualWrite(V0, fsrReading);
 
   if (waiting == false && avg < emptyGlassValue) {
     Serial.println("Beer finished. Waiting for new one.");
@@ -225,7 +225,6 @@ void setup() {
   strip.clear();
   strip.show(); // Initialize all pixels to 'off'
   strip.setBrightness(255);
-  //waterAnimation();
 }
 
 

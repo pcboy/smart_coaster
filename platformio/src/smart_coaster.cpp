@@ -2,27 +2,27 @@
 
 #include <BlynkSimpleEsp32_BLE.h>
 
-
-#include <CircularBuffer.h>
-#include <Adafruit_NeoPixel.h>
-
+#include "smart_coaster.h"
+#include "vfs.h"
 #include "secrets.h"  // Contains the following:
 // #define BLYNK_AUTH_KEY 7est7df605ab4543bf7b358bf22161bb // sample key
+
 
 BlynkTimer timer;
 
 CircularBuffer<int, 20> fsrValues;
 
-boolean waiting = false;
-#define FSR_PIN A2
-int beerCounter = 0;
-int emptyGlassValue = 200;
-int fullGlassValue = 900;
+boolean waiting;
+#define FSR_PIN 34
+int beerCounter;
+int emptyGlassValue;
+int fullGlassValue;
 
-#define FEATHERWING_PIN A7
+#define FEATHERWING_PIN 23
+
+#define DEBUG true
 
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(32, FEATHERWING_PIN, NEO_GRB + NEO_KHZ800);
-
 
 int average(CircularBuffer<int, 20> *values) {
   int res = 0;
@@ -35,13 +35,13 @@ int average(CircularBuffer<int, 20> *values) {
   return res / i;
 }
 
-BLYNK_CONNECTED() {
-  Blynk.syncVirtual(V1);
-  Blynk.syncVirtual(V3);
-  Blynk.syncVirtual(V4);
+void init_state() {
+  waiting = false;
+  beerCounter = 0;
+  emptyGlassValue = 900;
+  fullGlassValue = 3500;
 }
 
-// restoring counter from server
 BLYNK_WRITE(V1) {
   //restoring int value
   beerCounter = param.asInt();
@@ -184,9 +184,36 @@ void waterAnim(uint8_t wait) {
   elevatorAnimation(wait, 0, 0, 255);
 }
 
+void sync_blynk() {
+  Blynk.virtualWrite(V1, beerCounter);
+  Blynk.virtualWrite(V3, emptyGlassValue);
+  Blynk.virtualWrite(V4, fullGlassValue);
+}
+
 BLYNK_WRITE(V8)
 {
-  theaterChaseRainbow(50);
+  //theaterChaseRainbow(50);
+  sync_blynk();
+}
+
+nvs_handle vfs_handle;
+
+void save_state() {
+  vfs_handle = vfs_get_handle("storage");
+  vfs_write_i32(vfs_handle, "beerCounter", beerCounter);
+  vfs_write_i32(vfs_handle, "waiting", waiting);
+  vfs_write_i32(vfs_handle, "emptyGlassValue", emptyGlassValue);
+  vfs_write_i32(vfs_handle, "fullGlassValue", fullGlassValue);
+}
+
+void restore_state() {
+  Serial.println("beerCounter");
+  Serial.println(beerCounter);
+  vfs_handle = vfs_get_handle("storage");
+  beerCounter = vfs_read_i32(vfs_handle, "beerCounter");
+  waiting = vfs_read_i32(vfs_handle, "waiting");
+  emptyGlassValue = vfs_read_i32(vfs_handle, "emptyGlassValue");
+  fullGlassValue = vfs_read_i32(vfs_handle, "fullGlassValue");
 }
 
 void myLoop() {
@@ -196,26 +223,54 @@ void myLoop() {
   Serial.println(fsrReading);
 
   fsrValues.push(fsrReading);
+  if (!fsrValues.isFull()) // We need more values.
+    return;
+
   int avg = average(&fsrValues);
+#ifdef DEBUG
   Serial.print("AVERAGE: ");
   Serial.println(avg);
+  Serial.print("fullGlassValue: ");
+  Serial.println(fullGlassValue);
+  Serial.print("emptyGlassValue: ");
+  Serial.println(emptyGlassValue);
+  Serial.print("waiting: ");
+  Serial.println(waiting);
   Blynk.virtualWrite(V0, fsrReading);
+  sync_blynk();
+#endif
 
   if (waiting == false && avg < emptyGlassValue) {
     Serial.println("Beer finished. Waiting for new one.");
     if (!(beerCounter % 2))
       waterAnim(200);
     waiting = true;
+    save_state();
+    initialize_ULP(FSR_PIN, emptyGlassValue, 0);
   } else if (waiting == true && avg >= fullGlassValue) {
     Serial.println("New beer");
     beerAnim(200);
     incrementGlassCounter();
     waiting = false;
+    save_state();
+    initialize_ULP(FSR_PIN, 4096, emptyGlassValue + (0.2 * emptyGlassValue));
   }
 }
 
+#include <esp_wifi.h>
+#include <esp_wifi_types.h>
+
 void setup() {
   Serial.begin(9600);
+  esp_wifi_set_mode(WIFI_MODE_NULL);
+
+  vfs_setup();
+  esp_sleep_wakeup_cause_t cause = esp_sleep_get_wakeup_cause();
+  init_state();
+
+  if (cause == ESP_SLEEP_WAKEUP_ULP) {
+    restore_state();
+  }
 
   Blynk.begin(BLYNK_AUTH_KEY);
 

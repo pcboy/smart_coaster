@@ -1,71 +1,64 @@
-esp_width = 23;
-esp_height = 7.5;
-esp_depth = 51.5;
+$fn=90;
+coaster_diameter = 95.8;
+coaster_around_width = 1;
+lego_hole_diameter = 4.1;
+case_around_width = lego_hole_diameter + 2.5 + 3;
+case_height = 15;
 
-sensor_width = 77;
-sensor_height = 12;
-coaster_width = sensor_width + esp_width;
-coaster_top_height = 6;
-coaster_bottom_height = sensor_height;
 
-module coaster_bottom(width, depth, height) {
-  color("white") {
+module bottom() {
+  difference() {
+    cylinder(d=coaster_diameter, h=6, center=true);
+    translate([0, 0, 3]) {
+      cylinder(d=coaster_diameter - coaster_around_width, h=6, center=true);
+    }
+    // Holes for wires
+    color("red") translate([(coaster_diameter - coaster_around_width) / 2 - 6, 0, 0]) {
+      cube([2, 20, 7], true);
+    }
+    color("red") translate([(-coaster_diameter - coaster_around_width) / 2 + 6, 0, 0]) {
+      cube([2, 20, 7], true);
+    }
+    // Lego like holes
+    for (spin = [40 : 40 : 350])
+         rotate(spin) 
+         translate([(coaster_diameter - coaster_around_width) / 2 - 2.5,0,-3])
+         cylinder(d=lego_hole_diameter,h=5,center=true);
+  }
+}
+
+module middle() {
+ 
+    // plate
+    translate([0, 0, 3]) {
+      cylinder(d=coaster_diameter - coaster_around_width - 1, h=1, center=true);
+    }
+ 
+}
+
+module case() {
+
     difference() {
-      cube([width, depth, height], center = true);
+      cylinder(d=coaster_diameter, h=case_height, center=true);
+      translate([0, 0, 3])
+      cylinder(d=coaster_diameter - case_around_width, h=case_height +1, center=true);
 
-      translate([0, 0, 5]) {
-        color("red") cube([width - 6, depth - 6, height], center = true);
-      }
+      // Space for usb port
+      #rotate(90) translate([-coaster_diameter / 2, -15, -case_height / 2 + 6.7]) {
+        cube([20.5, 10.5, 7], center=true);
+      }      
     }
-  }
+    // Lego like cylinders
+    for (spin = [40 : 40 : 350])
+         rotate(spin) 
+         translate([(coaster_diameter - coaster_around_width) / 2 - 2.5, 0, case_height/2])
+         cylinder(d=lego_hole_diameter - 0.25,h=5,center=true);
+
 }
 
-module coaster_top(width, depth, height) {
-  rotate(a = [180, 0, 0]) {
-    translate([0,0, -12]) {
-      color("green") coaster_bottom(width, depth, height);
-    }
-  }
+
+!bottom();
+translate([0, 0, -case_height]) {
+  case();
 }
-
-module coaster_top_support(size) {
-  translate([-size / 2, 0, 0]) {
-    union() {
-      cube([size, 3, coaster_top_height + 2]);
-      translate([size / 2, - size / 2, 0]) {
-        cube([3, size, coaster_top_height + 2]);
-      }
-    }
-  }
-}
-
-module sensor_holder(width, depth, height) {
-  color("red") difference() {
-    cube([width + 2, depth + 2, height], center = true);
-    translate([0,0,5]) {
-      cube([width, depth, height], center = true);
-    }
-  }
-}
-
-module snap_fit(width, depth, height, x, y, z) {
-  translate([x - width + 2, y - depth, z + height]) {
-    rotate(a = [90, 180, 0]) {
-      color("purple")
-        scale([1.2,1,1])
-        linear_extrude(depth, center = true)
-        polygon(points=[[0,0], [0, height - 2], [-2, height - 2],[-2, height - 1], [-1, height],[1, height], [1,0]]);
-    }
-  }
-}
-
-#coaster_bottom(coaster_width, coaster_width, sensor_height);
-sensor_holder(sensor_width, sensor_width, sensor_height);
-#coaster_top(coaster_width, coaster_width, coaster_top_height);
-coaster_top_support(sensor_width);
-
-snap_fit(2, 3, 
-    coaster_top_height / 2 + coaster_bottom_height / 2,
-    coaster_width / 2 - 4,
-    coaster_width / 2 - 4.5, 
-    coaster_bottom_height - 10);
+middle();

@@ -1,5 +1,3 @@
-Inline-style: 
-![schematic](schematic.png "Schematic")
-Inline-style: 
-![pcb](pcb.png "PCB")
+<img alt="schematic" src="schematic.png" width="100%">
+<img alt="pcb" src="pcb.png" width="100%">
 
